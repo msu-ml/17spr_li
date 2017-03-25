@@ -1,0 +1,77 @@
+\documentclass{sig-alternate-05-2015}
+\usepackage{hyperref}
+
+\begin{document}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+\title{Predicting Video Tags Using Google's YouTube-8M Dataset (tentative title)}
+
+\numberofauthors{1} 
+\author{
+% 1st. author
+% \alignauthor
+Tatyana Li \\
+	\email{litatyan@msu.edu}
+}
+\date{17 February 2017}
+
+\maketitle
+
+\section{Problem Statement}
+On September 2016, Google announced a release of the large labeled dataset, YouTube-8M, for video understanding research. The dataset contains about 8 million YouTube videos, amounting to more than 500K hours of video content. Earlier this month, \textbf{Google hosted a Google Cloud and YouTube-8M Video Understanding Challenge} on a Kaggle platform, providing an updated version of the dataset with new labels and newly added audio features. 
+This project will use the above dataset to implement and compare classification algorithms to predict video labels based on the video and frame-level features provided. Ultimately, the purpose of this project is to identify the classification model that gives the best label predictions based on the test data provided by Google, which is not, however, publicly available.
+
+\section{Related Work}
+Until very recently, the research on image recognition had been applied to small labeled image datasets, e.g. Caltech 101/256 \cite{1}, PASCAL \cite{2}. Due to a rapid increase in computational power, there has been a significant advancement in image understanding research employing much larger-scale datasets, e.g. ImageNet \cite{3} and SUN \cite{4}. As an example, Krizhevsky et al. \cite{5} performed training of a large, deep convolutional neural network to classify a subset of 1.2M images from the ImageNet database into 1000 different classes. The deep neural network contained 60M parameters and 650,000 neurons, with 5 convolutional layers. The researchers showed that using purely supervised learning, the deep convolutional neural network is capable of producing high classification accuracy. The authors report top-1 and top-5 error rates of 37.5\% and 17\%, which was significantly lower, compared to the previously established benchmark. Sermanet et al. \cite{6} used convolutional neural nets for digit classification of house numbers from SVHN classification dataset, containing 32x32 images, with three color channels. The authors report that with L4 pooling, they achieved a state-of-the-art performance, with classification accuracy close to 95\%. 
+
+Although, relatively less work has been done on large-scale video classification, compared to the image domain, still, significant progress has been made in the area of video understanding research. The scale of the datasets progressed from smaller labeled video datasets Hollywood 2 \cite{7}, Weizmann \cite{8}, containing only several thousands of video clips to much larger-scale datasets, such as YFCC-100M dataset \cite{9} with 800K videos and metadata, containing video titles, descriptions and tags; ActivityNet \cite{10}, which is a large-scale video benchmark with several thousand videos and 200 human activity classes, and can be used to compare algorithms for human activity understanding. As of today, the Sports-1M \cite{11} has been considered one of the largest video datasets, containing around 1M video instances. To date, however, there has been no video datasets, comparable in scale and diversity to YouTube-8M. The updated YouTube-8M dataset contains over 8M videos and 1.9B video frames and provides the richest resource for research in video understanding and representation learning. The dataset comes with "pre-computed state-of-the-art features for 1.9 billion video frames", which "levels the playing field" for researhers to utilize the dataset on a scale never seen before. 
+
+\section{Data}
+[P.S. To be expanded further.] YouTube-8M dataset represents a benchmark in video understanding, with the key purpose to identify the main topics associated with a video. The dataset contains YouTube videos from a diverse range of categories from gaming and entertainment  to sports, foods, health, science and education. It sets this dataset apart from its' predecessors, where, for the latter, categories were limited to a single domain, such as, for example, sports or action. The Google researchers used a video annotation system \cite{12} to produce topic annotations, and then obtain videos for a certain topic. Overall, the YouTube-8M dataset contains 4800 classes with close to 8.3M videos. A given video may have more than one class label, with an average of 1.8 labels per video. The train set, released by Google, contains 5,786,881 video examples, validation set contains 1,652,167 videos, and test set contains 825,602 videos. The dataset comes with standard frame-level features. However, there's still a lot of room for experimenting with video-level representation learning approaches. 
+
+\section{Models}
+[P.S. To be expanded further.] 
+In a technical report, published by Google, the researchers used video-level features to train independent binary logistic classifiers for each label, batch SVMs and a mixture of experts, first introduced by Jacobs and Jordan \cite{13}. To overcome the challenge of scale which this dataset poses, the authors, instead of performing batch optimizations, which would have been impossible, used online learning algorithms, such as Adagrad to perform model updates, using small mini-batch examples. 
+
+\section{Preliminary Plan}
+\textbf{What has been done.} \\
+Due to the large size of the data files (31 GB of video-level data, about 1.7 TB of frame-level data), they are hosted on Google Cloud, along with the training and validation sets and ground truth labels. I set up a Google Cloud account to retrieve the training and test files, as well as set up the required environment using cloud shell by installing pre-requisite packages and dependencies and the latest version of TensorFlow. I worked on a survey of the existing research related to video understanding and the machine learning algorithms used to predict the key labels of a video. As I progress through the project, it's possible, that I would encounter other relevant research papers, that will subsequently be added to the literature review section of the paper. 
+Google created a starter code in a designated github repository, that I ran in Cloud ML as a starting point to learn how to train, evaluate, and create predictions. As mentioned earlier, the classifiers reported by the authors of the technical report, could be a good set of models to start with. Following this logic, as a starting point, I decided to train simple binary logistic classifiers, in order to obtain first predictions and establish a benchmark to further improvement. However, due to an increasingly large size of the train data, the models had been taking an exceedingly long amount of time to converge. Currently, I'm creating a smaller set of train data to perform initial training and obtain predictions on a single machine. Afterwards, the models will be traing on a Google Cloud ML platform. 
+
+\textbf{What will be done between March 17, 2017 and Final Report due date (April 28, 2017).} \\
+Within this timeframe, I will work on implementation of the classification algorithms, with intermediate submissions of the predictions on Kaggle. That way, I would be able to evaluate the prediction accucacy of the model on the test set, which is not publicly available. At this time, all other required sections of the report would also be expanded, refined and completed by the project due date. 
+
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+
+% \bibliographystyle{abbrv}
+% \bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
+
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%APPENDICES are optional
+%\balancecolumns
+
+% \section{References}
+% Generated by bibtex from your ~.bib file.  Run latex,
+% then bibtex, then latex twice (to resolve references)
+% to create the ~.bbl file.  Insert that ~.bbl file into
+% the .tex source file and comment out
+% the command \texttt{{\char'134}thebibliography}.
+
+
+\bibliography{YouTube-8M}
+\bibliographystyle{unsrt}
+\end{document}
